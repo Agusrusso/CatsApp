@@ -12,8 +12,13 @@ class CatListViewModel: ObservableObject {
     @Published var cats: [Cat] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    private let apiService: ApiServiceProtocol
     private var currentPage = 0
     private let limit = 10
+
+    init(apiService: ApiServiceProtocol = ApiService()) { // Default to real API
+            self.apiService = apiService
+        }
 
     func fetchCats() {
         guard !isLoading else { return }

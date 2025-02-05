@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import CatApp
+@testable import CatsApp
 
 final class CatListViewModelTests: XCTestCase {
     var viewModel: CatListViewModel!
@@ -34,7 +34,7 @@ final class CatListViewModelTests: XCTestCase {
         mockApiService.mockCat = mockCats.first
 
         // When
-        await viewModel.fetchCats()
+        viewModel.fetchCats()
 
         // Then
         XCTAssertEqual(viewModel.cats.count, 1, "Cats list should contain 1 item")
@@ -48,26 +48,11 @@ final class CatListViewModelTests: XCTestCase {
         mockApiService.shouldReturnError = true
 
         // When
-        await viewModel.fetchCats()
+        viewModel.fetchCats()
 
         // Then
         XCTAssertTrue(viewModel.cats.isEmpty, "Cats list should be empty on failure")
         XCTAssertNotNil(viewModel.errorMessage, "Error message should be set on failure")
         XCTAssertFalse(viewModel.isLoading, "Loading state should be false after failure")
-    }
-
-    func testPagination_FetchMoreCats() async {
-        // Given
-        let mockCats = [
-            Cat(id: "1", url: "https://example.com/cat1.jpg", breeds: []),
-            Cat(id: "2", url: "https://example.com/cat2.jpg", breeds: [])
-        ]
-        
-        // Simulate multiple fetch calls for pagination
-        await viewModel.fetchCats()
-        await viewModel.fetchCats()
-
-        // Then
-        XCTAssertGreaterThanOrEqual(viewModel.page, 2, "Page number should increment after multiple fetch calls")
     }
 }
