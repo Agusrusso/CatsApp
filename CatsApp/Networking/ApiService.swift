@@ -1,11 +1,11 @@
 import Foundation
 
 protocol ApiServiceProtocol {
-    func fetchCats(page: Int, limit: Int) async throws -> [Cat]
-    func fetchCatDetails(id: String) async throws -> Cat
+    func fetchCats(page: Int, limit: Int, completion: @escaping (Result<[Cat], Error>) -> Void)
+    func fetchCatDetails(id: String, completion: @escaping (Result<Cat, Error>) -> Void)
 }
 
-class ApiService {
+class ApiService: ApiServiceProtocol {
     static let shared = ApiService()
     private let baseURL = "https://api.thecatapi.com/v1/images/search"
     private let apiKey = "live_fT1X80cL3R7HfBGrQ57HICVQnWqsjNMUt1SxaSTGqRbsZ83kEhJnCAcYVO3QdTbO" 

@@ -16,7 +16,7 @@ class CatListViewModel: ObservableObject {
     private var currentPage = 0
     private let limit = 10
 
-    init(apiService: ApiServiceProtocol = ApiService()) { // Default to real API
+    init(apiService: ApiServiceProtocol = ApiService()) {
             self.apiService = apiService
         }
 
