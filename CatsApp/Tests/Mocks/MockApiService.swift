@@ -7,19 +7,27 @@
 
 
 import Foundation
+@testable import CatsApp
 
-class MockApiService {
-    var mockCat: Cat?
+class MockApiService: ApiServiceProtocol {
+    var mockCats: [Cat] = []
     var shouldReturnError = false
 
-    func fetchCats(page: Int) async throws -> [Cat] {
-        return [Cat(id: "1", url: "https://example.com/cat1.jpg", breeds: [])]
+    func fetchCats(page: Int, limit: Int, completion: @escaping (Result<[Cat], Error>) -> Void) {
+        if shouldReturnError {
+            completion(.failure(NSError(domain: "TestError", code: 0, userInfo: nil)))
+        } else {
+            completion(.success(mockCats))
+        }
     }
 
-    func fetchCatDetails(id: String) async throws -> Cat {
+    func fetchCatDetails(id: String, completion: @escaping (Result<Cat, Error>) -> Void) {
         if shouldReturnError {
-            throw NSError(domain: "TestError", code: 0, userInfo: nil)
+            completion(.failure(NSError(domain: "TestError", code: 0, userInfo: nil)))
+        } else if let cat = mockCats.first(where: { $0.id == id }) {
+            completion(.success(cat))
+        } else {
+            completion(.failure(NSError(domain: "NotFound", code: 404, userInfo: nil)))
         }
-        return mockCat ?? Cat(id: id, url: "https://example.com/cat.jpg", breeds: [])
     }
 }

@@ -16,7 +16,7 @@ class CatListViewModel: ObservableObject {
     private var currentPage = 0
     private let limit = 10
 
-    init(apiService: ApiServiceProtocol = ApiService()) {
+    init(apiService: ApiServiceProtocol = ApiService.shared) {
             self.apiService = apiService
         }
 
@@ -24,7 +24,7 @@ class CatListViewModel: ObservableObject {
         guard !isLoading else { return }
         isLoading = true
 
-        ApiService.shared.fetchCats(page: currentPage, limit: limit) { result in
+        apiService.fetchCats(page: currentPage, limit: limit) { result in
             DispatchQueue.main.async {
                 self.isLoading = false
                 switch result {

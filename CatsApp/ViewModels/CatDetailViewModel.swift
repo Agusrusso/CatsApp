@@ -13,9 +13,15 @@ class CatDetailViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
 
+    private let apiService: ApiServiceProtocol
+
+    init(apiService: ApiServiceProtocol = ApiService.shared) {
+        self.apiService = apiService
+    }
+
     func fetchCatDetails(id: String) {
         isLoading = true
-        ApiService.shared.fetchCatDetails(id: id) { result in
+        apiService.fetchCatDetails(id: id) { result in
             DispatchQueue.main.async {
                 self.isLoading = false
                 switch result {

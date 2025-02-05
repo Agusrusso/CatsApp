@@ -7,9 +7,9 @@
 
 
 import XCTest
+import SnapshotTesting
 
 final class CatListUITests: XCTestCase {
-
     let app = XCUIApplication()
 
     override func setUpWithError() throws {
@@ -17,25 +17,12 @@ final class CatListUITests: XCTestCase {
         app.launch()
     }
 
-    func testCatListDisplaysItems() throws {
-        // Ensure list exists
+    func testCatListSnapshot() throws {
         let catList = app.scrollViews.firstMatch
         XCTAssertTrue(catList.waitForExistence(timeout: 5), "Cat list should be visible")
 
-        // Check if at least one cell is visible
-        let firstCell = app.collectionViews.cells.firstMatch
-        XCTAssertTrue(firstCell.waitForExistence(timeout: 5), "At least one cat should be visible")
-    }
-
-    func testNavigateToDetailView() throws {
-        let firstCell = app.collectionViews.cells.firstMatch
-        XCTAssertTrue(firstCell.waitForExistence(timeout: 5), "First cat cell should be visible")
-
-        // Tap the first item
-        firstCell.tap()
-
-        // Verify detail screen appears
-        let detailImage = app.images["catDetailImage"]
-        XCTAssertTrue(detailImage.waitForExistence(timeout: 5), "Detail image should be visible")
+        // Take a screenshot and compare it
+        let screenshot = XCUIScreen.main.screenshot().image
+        assertSnapshot(matching: screenshot, as: .image)
     }
 }

@@ -31,6 +31,7 @@ struct CatListView: View {
                         .background(.clear)
                         .cornerRadius(12)
                     }
+                    .accessibilityIdentifier("catCell_\(cat.id)")
                     .onAppear {
                         if cat == viewModel.cats.last {
                             viewModel.fetchCats()
@@ -40,6 +41,7 @@ struct CatListView: View {
                 .background(.clear)
             }
             .scrollContentBackground(.hidden)
+            .accessibilityIdentifier("catListView")
             .background(
                 Image("background")
                     .resizable()

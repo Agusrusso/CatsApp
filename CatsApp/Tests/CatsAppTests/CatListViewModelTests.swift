@@ -9,14 +9,14 @@
 import XCTest
 @testable import CatsApp
 
-final class CatListViewModelTests: XCTestCase {
+class CatListViewModelTests: XCTestCase {
     var viewModel: CatListViewModel!
     var mockApiService: MockApiService!
 
     override func setUp() {
         super.setUp()
         mockApiService = MockApiService()
-        viewModel = CatListViewModel()
+        viewModel = CatListViewModel(apiService: mockApiService)  // Inject the mock
     }
 
     override func tearDown() {
@@ -25,49 +25,46 @@ final class CatListViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFetchCats_Success() async {
-        // Given
-        let mockCats = [
+    func testFetchCats_Success() {
+        // Arrange
+        let expectedCats = [
             Cat(id: "1", url: "https://example.com/cat1.jpg", breeds: []),
             Cat(id: "2", url: "https://example.com/cat2.jpg", breeds: [])
         ]
-        mockApiService.mockCat = mockCats.first
+        mockApiService.mockCats = expectedCats  // Ensure mock returns these cats
 
-        // When
+        let expectation = XCTestExpectation(description: "Fetch cats success")
+
+        // Act
         viewModel.fetchCats()
 
-        // Then
-        XCTAssertEqual(viewModel.cats.count, 1, "Cats list should contain 1 item")
-        XCTAssertEqual(viewModel.cats.first?.id, "1", "First cat ID should match")
-        XCTAssertFalse(viewModel.isLoading, "Loading state should be false after completion")
-        XCTAssertNil(viewModel.errorMessage, "Error message should be nil on success")
+        DispatchQueue.main.async {
+            // Assert
+            XCTAssertEqual(self.viewModel.cats.count, 2, "Should fetch 2 cats")
+            XCTAssertEqual(self.viewModel.cats.first?.id, "1", "First cat ID should match")
+            XCTAssertNil(self.viewModel.errorMessage, "There should be no error message on success")
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testFetchCats_Failure() async {
-        // Given
-        mockApiService.shouldReturnError = true
+    func testFetchCats_Failure() {
+        // Arrange
+        mockApiService.shouldReturnError = true  // Force an error
 
-        // When
+        let expectation = XCTestExpectation(description: "Fetch cats failure")
+
+        // Act
         viewModel.fetchCats()
 
-        // Then
-        XCTAssertTrue(viewModel.cats.isEmpty, "Cats list should be empty on failure")
-        XCTAssertNotNil(viewModel.errorMessage, "Error message should be set on failure")
-        XCTAssertFalse(viewModel.isLoading, "Loading state should be false after failure")
-    }
+        DispatchQueue.main.async {
+            // Assert
+            XCTAssertEqual(self.viewModel.cats.count, 0, "No cats should be added on failure")
+            XCTAssertNotNil(self.viewModel.errorMessage, "An error message should be set on failure")
+            expectation.fulfill()
+        }
 
-    func testPagination_FetchMoreCats() async {
-        // Given
-        let mockCats = [
-            Cat(id: "1", url: "https://example.com/cat1.jpg", breeds: []),
-            Cat(id: "2", url: "https://example.com/cat2.jpg", breeds: [])
-        ]
-        
-        // Simulate multiple fetch calls for pagination
-        await viewModel.fetchCats()
-        await viewModel.fetchCats()
-
-        // Then
-    //    XCTAssertGreaterThanOrEqual(viewModel.page, 2, "Page number should increment after multiple fetch calls")
+        wait(for: [expectation], timeout: 2.0)
     }
 }

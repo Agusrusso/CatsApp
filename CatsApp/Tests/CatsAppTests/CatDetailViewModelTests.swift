@@ -8,14 +8,14 @@
 import XCTest
 @testable import CatsApp
 
-final class CatDetailViewModelTests: XCTestCase {
+class CatDetailViewModelTests: XCTestCase {
     var viewModel: CatDetailViewModel!
     var mockApiService: MockApiService!
 
     override func setUp() {
         super.setUp()
         mockApiService = MockApiService()
-        viewModel = CatDetailViewModel()
+        viewModel = CatDetailViewModel(apiService: mockApiService)  // Inject the mock
     }
 
     override func tearDown() {
@@ -24,28 +24,43 @@ final class CatDetailViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFetchCatDetails_Success() async {
-        // Given
+    func testFetchCatDetails_Success() {
+        // Arrange
         let expectedCat = Cat(id: "abc123", url: "https://example.com/cat.jpg", breeds: [])
-        mockApiService.mockCat = expectedCat
+        mockApiService.mockCats = [expectedCat]  // Ensure mock returns this
 
-        // When
-        await viewModel.fetchCatDetails(id: "abc123")
+        let expectation = XCTestExpectation(description: "Fetch cat details success")
 
-        // Then
-        XCTAssertNotNil(viewModel.cat, "Cat object should not be nil after fetching details")
-        XCTAssertEqual(viewModel.cat?.id, "abc123", "The fetched cat ID should match")
+        // Act
+        viewModel.fetchCatDetails(id: "abc123")
+
+        DispatchQueue.main.async {
+            // Assert
+            XCTAssertNotNil(self.viewModel.cat, "The cat should not be nil after a successful fetch")
+            XCTAssertEqual(self.viewModel.cat?.id, "abc123", "The fetched cat ID should match")
+            XCTAssertNil(self.viewModel.errorMessage, "There should be no error message on success")
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testFetchCatDetails_Failure() async {
-        // Given
-        mockApiService.shouldReturnError = true
+    func testFetchCatDetails_Failure() {
+        // Arrange
+        mockApiService.shouldReturnError = true  // Force an error
 
-        // When
-        await viewModel.fetchCatDetails(id: "xyz456")
+        let expectation = XCTestExpectation(description: "Fetch cat details failure")
 
-        // Then
-        XCTAssertNil(viewModel.cat, "Cat should be nil when fetch fails")
-        XCTAssertNotNil(viewModel.errorMessage, "Error message should be set on failure")
+        // Act
+        viewModel.fetchCatDetails(id: "invalid_id")
+
+        DispatchQueue.main.async {
+            // Assert
+            XCTAssertNil(self.viewModel.cat, "Cat should be nil on failure")
+            XCTAssertNotNil(self.viewModel.errorMessage, "An error message should be set on failure")
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.0)
     }
 }

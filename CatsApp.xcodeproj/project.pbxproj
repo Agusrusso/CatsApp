@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6AAE58312D53C25D008D793F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAE582C2D53C0F1008D793F /* XCTest.framework */; platformFilter = ios; };
 		6AAE58322D53C263008D793F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAE582C2D53C0F1008D793F /* XCTest.framework */; platformFilter = ios; };
+		6AAE58952D53D037008D793F /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6AAE58942D53D037008D793F /* InlineSnapshotTesting */; };
+		6AAE58972D53D037008D793F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6AAE58962D53D037008D793F /* SnapshotTesting */; };
+		6AAE58992D53D037008D793F /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 6AAE58982D53D037008D793F /* SnapshotTestingCustomDump */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,7 @@
 				Tests/CatsAppUITests/CatDetailUITests.swift,
 				Tests/CatsAppUITests/CatListUITests.swift,
 				Tests/CatsAppUITests/CatsAppUITestsLaunchTests.swift,
+				Tests/Mocks/MockApiService.swift,
 			);
 			target = 6AAE57A32D538D8C008D793F /* CatsApp */;
 		};
@@ -85,7 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AAE57FE2D53B4A0008D793F /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AAE58992D53D037008D793F /* SnapshotTestingCustomDump in Frameworks */,
+				6AAE58972D53D037008D793F /* SnapshotTesting in Frameworks */,
+				6AAE58952D53D037008D793F /* InlineSnapshotTesting in Frameworks */,
 				6AAE58322D53C263008D793F /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +201,9 @@
 			);
 			name = CatsAppUITests;
 			packageProductDependencies = (
+				6AAE58942D53D037008D793F /* InlineSnapshotTesting */,
+				6AAE58962D53D037008D793F /* SnapshotTesting */,
+				6AAE58982D53D037008D793F /* SnapshotTestingCustomDump */,
 			);
 			productName = CatsAppUITests;
 			productReference = 6AAE57BE2D538D8D008D793F /* CatsAppUITests.xctest */;
@@ -232,6 +241,9 @@
 			);
 			mainGroup = 6AAE579B2D538D8C008D793F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6AAE58932D53D037008D793F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6AAE57A52D538D8C008D793F /* Products */;
 			projectDirPath = "";
@@ -595,6 +607,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AAE58932D53D037008D793F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AAE58942D53D037008D793F /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AAE58932D53D037008D793F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		6AAE58962D53D037008D793F /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AAE58932D53D037008D793F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		6AAE58982D53D037008D793F /* SnapshotTestingCustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AAE58932D53D037008D793F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTestingCustomDump;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6AAE579C2D538D8C008D793F /* Project object */;
 }
