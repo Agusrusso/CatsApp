@@ -20,6 +20,7 @@ struct CatDetailView: View {
                         image
                             .resizable()
                             .scaledToFit()
+                            .accessibilityIdentifier("catDetailImage")
                     } placeholder: {
                         ProgressView()
                     }
@@ -30,6 +31,7 @@ struct CatDetailView: View {
                         .font(.largeTitle)
                         .bold()
                         .shadow(radius: 1)
+                        .accessibilityIdentifier("breedInfo")
 
                     if let breed = cat.breeds?.first {
                         Text("Origin: \(breed.origin)")

@@ -1,5 +1,10 @@
 import Foundation
 
+protocol ApiServiceProtocol {
+    func fetchCats(page: Int, limit: Int) async throws -> [Cat]
+    func fetchCatDetails(id: String) async throws -> Cat
+}
+
 class ApiService {
     static let shared = ApiService()
     private let baseURL = "https://api.thecatapi.com/v1/images/search"

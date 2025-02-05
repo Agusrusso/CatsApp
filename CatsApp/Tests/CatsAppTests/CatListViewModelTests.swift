@@ -34,7 +34,7 @@ final class CatListViewModelTests: XCTestCase {
         mockApiService.mockCat = mockCats.first
 
         // When
-        await viewModel.fetchCats()
+        viewModel.fetchCats()
 
         // Then
         XCTAssertEqual(viewModel.cats.count, 1, "Cats list should contain 1 item")
@@ -48,7 +48,7 @@ final class CatListViewModelTests: XCTestCase {
         mockApiService.shouldReturnError = true
 
         // When
-        await viewModel.fetchCats()
+        viewModel.fetchCats()
 
         // Then
         XCTAssertTrue(viewModel.cats.isEmpty, "Cats list should be empty on failure")

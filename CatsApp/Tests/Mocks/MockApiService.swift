@@ -9,16 +9,16 @@
 import Foundation
 
 class MockApiService {
-    var shouldReturnError = false
     var mockCat: Cat?
+    var shouldReturnError = false
 
-    func fetchCats(page: Int, limit: Int) async throws -> [Cat] {
-        return []
+    func fetchCats(page: Int) async throws -> [Cat] {
+        return [Cat(id: "1", url: "https://example.com/cat1.jpg", breeds: [])]
     }
 
     func fetchCatDetails(id: String) async throws -> Cat {
         if shouldReturnError {
-            throw NSError(domain: "TestError", code: 500, userInfo: nil)
+            throw NSError(domain: "TestError", code: 0, userInfo: nil)
         }
         return mockCat ?? Cat(id: id, url: "https://example.com/cat.jpg", breeds: [])
     }
