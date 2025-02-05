@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6AAE58312D53C25D008D793F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAE582C2D53C0F1008D793F /* XCTest.framework */; platformFilter = ios; };
+		6AAE58322D53C263008D793F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAE582C2D53C0F1008D793F /* XCTest.framework */; platformFilter = ios; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6AAE57B52D538D8D008D793F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,7 @@
 		6AAE57A42D538D8C008D793F /* CatsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AAE57B42D538D8D008D793F /* CatsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AAE57BE2D538D8D008D793F /* CatsAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AAE582C2D53C0F1008D793F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -34,8 +40,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Tests/CatsAppTests/CatDetailViewModelTests.swift,
+				Tests/CatsAppTests/CatListViewModelTests.swift,
+				Tests/CatsAppUITests/CatDetailUITests.swift,
 				Tests/CatsAppUITests/CatListUITests.swift,
-				Tests/CatsAppUITests/CatsAppUITests.swift,
 				Tests/CatsAppUITests/CatsAppUITestsLaunchTests.swift,
 			);
 			target = 6AAE57A32D538D8C008D793F /* CatsApp */;
@@ -44,14 +51,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Tests/CatsAppTests/CatDetailViewModelTests.swift,
+				Tests/CatsAppTests/CatListViewModelTests.swift,
+				Tests/Mocks/MockApiService.swift,
 			);
 			target = 6AAE57B32D538D8D008D793F /* CatsAppTests */;
 		};
 		6AAE57E02D538DDA008D793F /* Exceptions for "CatsApp" folder in "CatsAppUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Tests/CatsAppUITests/CatDetailUITests.swift,
 				Tests/CatsAppUITests/CatListUITests.swift,
-				Tests/CatsAppUITests/CatsAppUITests.swift,
 				Tests/CatsAppUITests/CatsAppUITestsLaunchTests.swift,
 			);
 			target = 6AAE57BD2D538D8D008D793F /* CatsAppUITests */;
@@ -83,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AAE58312D53C25D008D793F /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AAE58322D53C263008D793F /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				6AAE57A62D538D8C008D793F /* CatsApp */,
+				6AAE582B2D53C0F1008D793F /* Frameworks */,
 				6AAE57A52D538D8C008D793F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +124,14 @@
 				6AAE57BE2D538D8D008D793F /* CatsAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6AAE582B2D53C0F1008D793F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6AAE582C2D53C0F1008D793F /* XCTest.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
